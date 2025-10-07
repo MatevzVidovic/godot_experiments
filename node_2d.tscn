@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://c86y5awduy7po"]
+
+[ext_resource type="Texture2D" uid="uid://ububhthcot3p" path="res://icon.svg" id="1_0e48y"]
+[ext_resource type="Script" uid="uid://w5anytnhwl2g" path="res://player.gd" id="1_wtcfe"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y32ns"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wtcfe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wtcfe"]
+radius = 110.0
+height = 254.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epypp"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hol4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epypp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape2D_y32ns")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+material = SubResource("ShaderMaterial_wtcfe")
+script = ExtResource("1_wtcfe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(1, -129)
+shape = SubResource("CapsuleShape2D_wtcfe")
+debug_color = Color(0.785053, 0.226512, 0.903282, 0.42)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(0.999991, -129.5)
+scale = Vector2(1.71875, 2.02344)
+sprite_frames = SubResource("SpriteFrames_0hol4")
+
+[node name="Camera2D" type="Camera2D" parent="."]

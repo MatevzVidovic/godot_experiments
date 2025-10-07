@@ -22,11 +22,14 @@ func _physics_process(delta):
 			move_and_slide()
 			return
 
+
+
+	# Sideways movement
+	# --------------------------------------------------
+
 	# Get input direction
 	var direction = Vector2.ZERO
 
-	# Gravity
-	velocity.y += 200 * delta
 
 	# Left and right movement
 	if Input.is_key_pressed(KEY_D):
@@ -34,17 +37,10 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_A):
 		direction.x -= 1
 
-	if not in_jump and Input.is_key_pressed(KEY_W):
-		direction.y -= 400
-		in_jump = true
-
-	# Check if on floor to reset jump
-	if is_on_floor() and in_jump:
-		in_jump = false
-
 	# Normalize diagonal movement
-	if direction.length() > 0:
-		direction = direction.normalized()
+	# This makes jumps very weird
+	# if direction.length() > 0:
+	# 	direction = direction.normalized()
 
 	# Check for current-direction-dash input
 	if Input.is_action_just_pressed("ui_select") and direction.length() > 0 and not is_dashing:
@@ -54,10 +50,32 @@ func _physics_process(delta):
 
 	# Normal movement
 	if direction.length() > 0:
-		velocity = direction * SPEED
-	else:
-		velocity = velocity.lerp(Vector2.ZERO, 0.1)
+		velocity.x = direction.x * SPEED
 
+	# --------------------------------------------------
+
+
+
+
+
+	# Gravity
+	velocity.y += 20 * SPEED * delta
+
+	# Jumping
+
+	if not in_jump and Input.is_key_pressed(KEY_W):
+		velocity.y -= 10 * SPEED
+		in_jump = true
+
+	# Check if on floor to reset jump
+	if is_on_floor() and in_jump:
+		in_jump = false
+
+
+
+
+
+	velocity = velocity.lerp(Vector2.ZERO, 0.1)
 	move_and_slide()
 
 

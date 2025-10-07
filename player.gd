@@ -37,6 +37,9 @@ func _physics_process(delta):
 		direction.y -= 400
 		in_jump = true
 
+	# Check if on floor to reset jump
+	if is_on_floor() and in_jump:
+		in_jump = false
 
 	# Normalize diagonal movement
 	if direction.length() > 0:

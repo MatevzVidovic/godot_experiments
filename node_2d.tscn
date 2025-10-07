@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://c86y5awduy7po"]
+[gd_scene load_steps=11 format=3 uid="uid://c86y5awduy7po"]
 
 [ext_resource type="Texture2D" uid="uid://ububhthcot3p" path="res://icon.svg" id="1_0e48y"]
 [ext_resource type="Script" uid="uid://w5anytnhwl2g" path="res://player.gd" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://dg2wxbiyhdee2" path="res://backgrounds/exterior-parallaxBG1.png" id="3_epypp"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y32ns"]
 
@@ -26,6 +27,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0e48y"]
+radius = 116.0
+height = 256.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0e48y"]
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Floor" type="StaticBody2D" parent="."]
@@ -47,4 +54,27 @@ position = Vector2(0.999991, -129.5)
 scale = Vector2(1.71875, 2.02344)
 sprite_frames = SubResource("SpriteFrames_0hol4")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(7, -293)
+position_smoothing_enabled = true
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(282, -200)
+shape = SubResource("CapsuleShape2D_0e48y")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+position = Vector2(285, -202)
+scale = Vector2(213, 236)
+texture = SubResource("PlaceholderTexture2D_0e48y")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(800, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(19.5, -296.5)
+scale = Vector2(9.86328, 2.16333)
+texture = ExtResource("3_epypp")

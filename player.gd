@@ -3,6 +3,7 @@ extends CharacterBody2D
 const SPEED = 300.0
 const DASH_SPEED = 800.0
 const DASH_DURATION = 0.2
+const PUSH_FORCE = 1000.0
 
 var in_jump = false
 
@@ -58,3 +59,12 @@ func _physics_process(delta):
 		velocity = velocity.lerp(Vector2.ZERO, 0.1)
 
 	move_and_slide()
+
+
+
+	#   Your player needs to apply force when colliding:
+	# In player.gd, detect collision and push
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider() is RigidBody2D:
+			collision.get_collider().apply_central_impulse(-collision.get_normal() * PUSH_FORCE)
